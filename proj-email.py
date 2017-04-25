@@ -3,7 +3,7 @@
 
 from email import message_from_string
 from tkinter import *
-from tkinter import messagebox
+from tkinter import messagebox, Text
 class Email():
     def __init__(self, username, password, cl):
         self._username = username
@@ -71,6 +71,8 @@ class Email_GUI:
         self.connected.pack()
         self.rec_title = Label(master, text = '\nReceiver Email Address', font = ("Century Gothic", 18), bg = 'cyan')
         self.rec_title.pack()
+        self.notice = Label(master, text = 'Separate email addresses with a comma.', font = ("Century Gothic", 10), bg = 'cyan')
+        self.notice.pack()
         self.rec_email = Entry(master, width = 40)
         self.rec_email.pack()
         self.sub_title = Label(master, text = '\nSubject', font = ("Century Gothic", 18), bg = 'cyan')
@@ -90,15 +92,18 @@ class Email_GUI:
 
     def send_email(self):
         rec = self.rec_email.get()
+        
         if rec.lower() == 'myself':
             rec = self.email.username
 
+        lst = rec.split()
         subj = self.text.get()
         mes = self.main.get(0.0, END)
         if self.verify_email(rec):
             send = messagebox.askyesno('Send Email?', 'Are you sure you want to send this email?\n\nSubject: {0}\n\nRecipient(s): {1}'.format(subj,rec))
             if bool(send) == True:
-                x = self.email.send(to = rec, subject = subj, message = mes)
+                for address in lst:
+                    x = self.email.send(to = address, subject = subj, message = mes)
                 if bool(x) == True:
                         messagebox.showinfo('Email Sent!', 'Congratulations! Successfully Sent Email!\n\nSubject: {0}\n\nRecipient(s): {1}'.format(subj,rec))
                 else:
@@ -158,13 +163,11 @@ class Authentication:
         self.auth.pack()
         self.button = Button(master, text='Authenticate', command = self.make_connection)
         self.button.pack()
-        self.button.bind("<Return>", self.enter_key)
+        master.bind("<Return>", self.enter_key)
         self.master = master
 
 
 
-    def enter_key(self):
-        self.make_connection()
 
     def make_connection(self):
         client = self.variable.get()
@@ -186,6 +189,8 @@ class Authentication:
                 messagebox.showerror('Connection Fail, try again',\
                                            "Invalid Username, Password, or Client, Please Try Again.")
 
+    def enter_key(self, event):
+        self.make_connection()
 
 if __name__ == '__main__':
     root = Tk()
