@@ -10,3 +10,7 @@ Modules used:
 >2. smtplib: Python module for outgoing email services (Simple Mail Transfer Protocol)
 
 Incoming mail system under development.
+
+Demo:
+![Authentication](1.png)
+![Main](2.png)
