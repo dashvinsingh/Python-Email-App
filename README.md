@@ -1,4 +1,4 @@
-#Python Email App
+# Python Email App
 
 Python Email App is a simple python GUI app that is used for outgoing emails.
 As of now the supported email clients are: UoftMail, Gmail, Outlook, and Yahoo.
