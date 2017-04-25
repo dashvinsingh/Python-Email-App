@@ -11,6 +11,5 @@ Modules used:
 
 Incoming mail system under development.
 
-Demo:
 ![Authentication](1.png)
 ![Main](2.png)
